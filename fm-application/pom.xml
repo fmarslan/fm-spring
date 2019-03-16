@@ -7,8 +7,8 @@
 		<artifactId>fm-spring</artifactId>
 		<version>1.0.0</version>
 	</parent>
-	<artifactId>fm-persistence</artifactId>
-	<name>FM SC-Persistence</name>
+	<artifactId>fm-application</artifactId>
+	<name>FM SC-Application</name>
 	<description>The structure of your application simply and clearly struct with use Spring Boot for microservice apps</description>
 	<url>https://github.com/fmarslan</url>
 	<licenses>
@@ -32,17 +32,49 @@
 	</scm>
 	<dependencies>
 		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-data-rest</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-oauth2-client</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-security</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-web</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.liquibase</groupId>
+			<artifactId>liquibase-core</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-tomcat</artifactId>
+			<scope>provided</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-test</artifactId>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>com.fmarslan.struct-spring</groupId>
+			<artifactId>fm-service</artifactId>
+			<scope>provided</scope>
+		</dependency>
+		<dependency>
 			<groupId>com.fmarslan.struct-spring</groupId>
 			<artifactId>fm-common</artifactId>
 			<scope>provided</scope>
 		</dependency>
-		<!-- <dependency> -->
-		<!-- <groupId>org.springframework.data</groupId> -->
-		<!-- <artifactId>spring-data-jpa</artifactId> -->
-		<!-- </dependency> -->
 		<dependency>
-			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-starter-data-jpa</artifactId>
+			<groupId>com.fmarslan.struct-spring</groupId>
+			<artifactId>fm-persistence</artifactId>
+			<scope>provided</scope>
 		</dependency>
 	</dependencies>
 </project>

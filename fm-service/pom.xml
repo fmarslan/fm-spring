@@ -3,14 +3,36 @@
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 	<parent>
-		<groupId>com.fmarslan.spring</groupId>
+		<groupId>com.fmarslan.struct-spring</groupId>
 		<artifactId>fm-spring</artifactId>
 		<version>1.0.0</version>
 	</parent>
 	<artifactId>fm-service</artifactId>
+	<name>FM SC-Service</name>
+	<description>The structure of your application simply and clearly struct with use Spring Boot for microservice apps</description>
+	<url>https://github.com/fmarslan</url>
+	<licenses>
+		<license>
+			<name>The Apache License, Version 2.0</name>
+			<url>http://www.apache.org/licenses/LICENSE-2.0.txt</url>
+		</license>
+	</licenses>
+	<developers>
+		<developer>
+			<name>Fatih Mehmet ARSLAN</name>
+			<email>contact@fmarslan.com</email>
+			<organization>fmarslan</organization>
+			<organizationUrl>https://github.com/fmarslan</organizationUrl>
+		</developer>
+	</developers>
+	<scm>
+		<connection>scm:git:git://github.com/fmarslan/fm-spring.git</connection>
+		<developerConnection>scm:git:ssh://github.com:fmarslan/fm-spring.git</developerConnection>
+		<url>https://github.com/fmarslan/fm-spring</url>
+	</scm>
 	<dependencies>
 		<dependency>
-			<groupId>com.fmarslan.spring</groupId>
+			<groupId>com.fmarslan.struct-spring</groupId>
 			<artifactId>fm-common</artifactId>
 			<scope>provided</scope>
 		</dependency>
@@ -19,7 +41,7 @@
 			<artifactId>spring-boot-starter-aop</artifactId>
 		</dependency>
 		<dependency>
-			<groupId>com.fmarslan.spring</groupId>
+			<groupId>com.fmarslan.struct-spring</groupId>
 			<artifactId>fm-persistence</artifactId>
 			<scope>provided</scope>
 		</dependency>
