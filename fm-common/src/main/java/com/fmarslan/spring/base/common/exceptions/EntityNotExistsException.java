@@ -47,7 +47,7 @@ public class EntityNotExistsException extends AbstractException {
 
 	@Override
 	public String getCode() {
-		return "ENTITYNOTEXISTS-001";
+		return "ENTITY_NOT_EXISTS";
 	}
 
 }

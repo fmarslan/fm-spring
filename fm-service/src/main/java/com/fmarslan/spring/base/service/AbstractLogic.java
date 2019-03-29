@@ -19,13 +19,12 @@ package com.fmarslan.spring.base.service;
 
 import java.io.Serializable;
 import java.util.List;
+import java.util.Optional;
 
 import com.fmarslan.spring.base.common.request.ListRequest;
 import com.fmarslan.spring.base.common.response.ListModel;
 import com.fmarslan.spring.base.persistence.AbstractRepository;
 import com.fmarslan.spring.base.persistence.BaseEntity;
-
-
 
 public abstract class AbstractLogic<ID extends Serializable, ENTITY extends BaseEntity<ID>> {
 
@@ -46,7 +45,7 @@ public abstract class AbstractLogic<ID extends Serializable, ENTITY extends Base
 		getRepository().delete(entity, hardDelete);
 	}
 
-	public ENTITY findByID(ID id) {
+	public Optional<ENTITY> findByID(ID id) {
 		return getRepository().findByID(id);
 	}
 

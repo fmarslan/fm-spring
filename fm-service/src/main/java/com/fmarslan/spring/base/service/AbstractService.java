@@ -19,8 +19,9 @@ package com.fmarslan.spring.base.service;
 
 import java.io.Serializable;
 import java.util.List;
-
+import org.springframework.transaction.annotation.Transactional;
 import com.fmarslan.spring.base.common.dto.BaseDto;
+import com.fmarslan.spring.base.common.exceptions.EntityNotExistsException;
 import com.fmarslan.spring.base.common.request.ListRequest;
 import com.fmarslan.spring.base.common.response.ListModel;
 import com.fmarslan.spring.base.persistence.BaseEntity;
@@ -30,9 +31,18 @@ public abstract class AbstractService<ID extends Serializable, DTO extends BaseD
 
 //	private Logger logger = LoggerFactory.getLogger(this.getClass());
 
+
+	Class<DTO> dtoClazz;
+	
+	public AbstractService(Class<DTO> dtoClazz) {
+		this.dtoClazz = dtoClazz;
+	}
+	
 	protected abstract AbstractLogic<ID, ENTITY> getLogic();
 
 	protected abstract AbstractMapper<ID, ENTITY, DTO> getMapper();
+	
+	
 
 	@Auth
 	public DTO create(DTO dto) {
@@ -51,7 +61,10 @@ public abstract class AbstractService<ID extends Serializable, DTO extends BaseD
 
 	@Auth
 	public DTO findByID(ID id) {
-		return getMapper().convertToDto(getLogic().findByID(id));
+		if (getLogic().findByID(id).isPresent())
+			return getMapper().convertToDto(getLogic().findByID(id).get());
+		else
+			throw new EntityNotExistsException(dtoClazz.getName());
 	}
 
 	@Auth

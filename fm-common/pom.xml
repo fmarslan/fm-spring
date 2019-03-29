@@ -30,4 +30,12 @@
 		<developerConnection>scm:git:ssh://github.com:fmarslan/fm-spring.git</developerConnection>
 		<url>https://github.com/fmarslan/fm-spring</url>
 	</scm>
+	<dependencies>
+		<dependency>
+			<groupId>io.swagger</groupId>
+			<artifactId>swagger-annotations</artifactId>
+			<version>${swagger.annotation.version}</version>
+			<scope>provided</scope>
+		</dependency>
+	</dependencies>
 </project>

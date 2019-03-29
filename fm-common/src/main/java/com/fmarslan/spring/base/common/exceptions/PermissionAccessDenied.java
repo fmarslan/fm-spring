@@ -46,7 +46,7 @@ public class PermissionAccessDenied extends AbstractException {
 
 	@Override
 	public String getCode() {
-		return "LOGIC-001";
+		return "PERMISSION_ACCESS_DENIED";
 	}
 
 }

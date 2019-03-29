@@ -19,6 +19,7 @@ package com.fmarslan.spring.base.persistence;
 
 import java.io.Serializable;
 import java.util.List;
+import java.util.Optional;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -27,7 +28,6 @@ import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
 
-import com.fmarslan.spring.base.common.exceptions.EntityNotExistsException;
 import com.fmarslan.spring.base.common.exceptions.LogicalException;
 import com.fmarslan.spring.base.common.request.ListRequest;
 import com.fmarslan.spring.base.common.response.ListModel;
@@ -54,8 +54,8 @@ public abstract class AbstractRepository<ID extends Serializable, ENTITY extends
 			throw new LogicalException("%s should be not null", entityClazz.getName());
 		if (entity.getPrimaryKey() != null)
 			throw new LogicalException("%s Primary key should be null", entityClazz.getName());
-		return getEntityManager().merge(entity);
-		// return entity;
+		getEntityManager().persist(entity);
+		return entity;
 	}
 
 	public ENTITY update(ENTITY entity) {
@@ -63,8 +63,8 @@ public abstract class AbstractRepository<ID extends Serializable, ENTITY extends
 			throw new LogicalException("%s should be not null", entityClazz.getName());
 		if (entity.getPrimaryKey() == null)
 			throw new LogicalException("%s Primary key should be not null", entityClazz.getName());
-		getEntityManager().persist(entity);
-		return entity;
+		return getEntityManager().merge(entity);
+		//return entity;
 	}
 
 	public void delete(ENTITY entity, boolean hardDelete) {
@@ -78,11 +78,9 @@ public abstract class AbstractRepository<ID extends Serializable, ENTITY extends
 		}
 	}
 
-	public ENTITY findByID(ID id) {
+	public Optional<ENTITY> findByID(ID id) {
 		ENTITY entity = getEntityManager().find(entityClazz, id);
-		if (entity == null)
-			throw new EntityNotExistsException(entityClazz.getName());
-		return entity;
+		return Optional.ofNullable(entity);
 	}
 
 	public List<ENTITY> getAll() {
