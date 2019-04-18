@@ -24,7 +24,7 @@ import org.aspectj.lang.reflect.MethodSignature;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.context.annotation.Configuration;
-import com.fmarslan.spring.base.common.configuration.AppContext;
+import com.fmarslan.spring.base.common.application.AppContext;
 import com.fmarslan.spring.base.common.exceptions.PermissionAccessDenied;
 
 @Aspect

@@ -18,7 +18,7 @@ package com.fmarslan.spring.base.persistence.audit;
 
 import java.util.Optional;
 import org.springframework.data.domain.AuditorAware;
-import com.fmarslan.spring.base.common.configuration.AppContext;
+import com.fmarslan.spring.base.common.application.AppContext;
 
 /**
  * @author fmarslan

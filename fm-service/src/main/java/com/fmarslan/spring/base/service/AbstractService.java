@@ -19,7 +19,6 @@ package com.fmarslan.spring.base.service;
 
 import java.io.Serializable;
 import java.util.List;
-import org.springframework.transaction.annotation.Transactional;
 import com.fmarslan.spring.base.common.dto.BaseDto;
 import com.fmarslan.spring.base.common.exceptions.EntityNotExistsException;
 import com.fmarslan.spring.base.common.request.ListRequest;

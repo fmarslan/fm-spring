@@ -27,6 +27,7 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.web.authentication.www.BasicAuthenticationFilter;
 import com.fmarslan.spring.base.application.security.JwtConfig;
+import com.fmarslan.spring.base.application.security.JwtTokenProvider;
 import io.jsonwebtoken.Jwts;
 
 /**
@@ -36,10 +37,13 @@ import io.jsonwebtoken.Jwts;
 public class JWTAuthorizationFilter extends BasicAuthenticationFilter {
 
   private JwtConfig jwtConfig;
+  private JwtTokenProvider jwtTokenProvider;
 
-  public JWTAuthorizationFilter(AuthenticationManager authenticationManager, JwtConfig jwtConfig) {
+  public JWTAuthorizationFilter(AuthenticationManager authenticationManager,
+      JwtTokenProvider jwtTokenProvider, JwtConfig jwtConfig) {
     super(authenticationManager);
     this.jwtConfig = jwtConfig;
+    this.jwtTokenProvider = jwtTokenProvider;
   }
 
   @Override
@@ -53,6 +57,10 @@ public class JWTAuthorizationFilter extends BasicAuthenticationFilter {
     }
     UsernamePasswordAuthenticationToken authentication = getAuthentication(req);
     SecurityContextHolder.getContext().setAuthentication(authentication);
+    if (authentication != null) {
+      String token = jwtTokenProvider.generateToken(authentication);
+      res.addHeader(jwtConfig.getHeader(), token);
+    }
     chain.doFilter(req, res);
   }
 

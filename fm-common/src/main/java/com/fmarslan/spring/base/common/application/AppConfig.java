@@ -13,15 +13,18 @@
  * the License.
  * 
  */
-package com.fmarslan.spring.base.common.configuration;
+package com.fmarslan.spring.base.common.application;
 
 import java.util.HashMap;
 import java.util.Map;
 
 public class AppConfig {
 
-  public static final String DEFAULT_PAGE_SIZE_KEY = "fm.application.configuration.pageSize";
+  public static final String DEFAULT_PAGE_SIZE_KEY = "application.configuration.pageSize";
   public static final int DEFAULT_PAGE_SIZE = 25;
+
+  public static final String DEFAULT_LANGUAGE_KEY = "application.default.language";
+  public static final String DEFAULT_LANGUAGE = "en";
 
   private static HashMap<String, Object> instance = new HashMap<String, Object>();
 
@@ -81,4 +84,7 @@ public class AppConfig {
     return get(DEFAULT_PAGE_SIZE_KEY, DEFAULT_PAGE_SIZE);
   }
 
+  public static String getDefaulLanguage() {
+    return get(DEFAULT_LANGUAGE_KEY, DEFAULT_LANGUAGE);
+  }
 }

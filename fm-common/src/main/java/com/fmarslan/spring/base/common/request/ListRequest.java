@@ -20,8 +20,7 @@ package com.fmarslan.spring.base.common.request;
 import java.io.Serializable;
 import java.util.List;
 import java.util.Map;
-
-import com.fmarslan.spring.base.common.configuration.AppConfig;
+import com.fmarslan.spring.base.common.application.AppConfig;
 
 public class ListRequest implements Serializable {
 

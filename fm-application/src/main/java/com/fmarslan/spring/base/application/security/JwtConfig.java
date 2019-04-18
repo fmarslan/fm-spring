@@ -23,7 +23,7 @@ import org.springframework.beans.factory.annotation.Value;
  *
  */
 public class JwtConfig {
-  @Value("${security.jwt.uri:/login/**}")
+  @Value("${security.jwt.uri:/auth/**}")
   private String Uri;
 
   @Value("${security.jwt.header:Authorization}")
@@ -63,7 +63,7 @@ public class JwtConfig {
   }
 
   public int getExpiration() {
-    return expiration;
+    return expiration * 1000;
   }
 
   public void setExpiration(int expiration) {
