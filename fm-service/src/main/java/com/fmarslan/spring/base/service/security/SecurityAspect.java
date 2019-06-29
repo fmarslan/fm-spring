@@ -32,7 +32,7 @@ import com.fmarslan.spring.base.common.exceptions.PermissionAccessDenied;
 public class SecurityAspect {
 
   private Logger logger = LoggerFactory.getLogger(this.getClass());
-
+  
   @PostConstruct
   private void init() {
     AppContext.setCurrentUserHandler(new DefaultCurrentUserHandler());
@@ -52,8 +52,11 @@ public class SecurityAspect {
 
       if (authTag.value().equals(Auth.BLOCKED))
         throw new PermissionAccessDenied(authTag.value());
+      
+      if (authTag.value().equals(Auth.AUTHENTICATED) && AppContext.getCurrentUserHandler().isAuthenticated()==false)
+        throw new PermissionAccessDenied("Not Authenticated");
 
-      if (authTag.value().equals(Auth.UNSECURED) == false && AppContext.getCurrentUserHandler()
+      if (authTag.value().equals(Auth.AUTHENTICATED) == false && authTag.value().equals(Auth.UNSECURED) == false && AppContext.getCurrentUserHandler()
           .getCurrentUserAuths().contains(authTag.value()) == false)
         throw new PermissionAccessDenied(authTag.value());
     }

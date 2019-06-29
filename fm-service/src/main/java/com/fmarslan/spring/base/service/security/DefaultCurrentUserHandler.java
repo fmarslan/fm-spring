@@ -59,4 +59,18 @@ public class DefaultCurrentUserHandler implements ICurrentUserDetail {
     return SecurityContextHolder.getContext().getAuthentication().getName();
   }
 
+  /*
+   * (non-Javadoc)
+   * 
+   * @see com.fmarslan.spring.base.common.shared.ICurrentUserDetail#getCurrentUserObjects()
+   */
+  @Override
+  public Object getCurrentUserObjects() {
+    return SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+  }
+
+  @Override
+  public Boolean isAuthenticated() {
+    return SecurityContextHolder.getContext().getAuthentication().isAuthenticated();
+  }
 }

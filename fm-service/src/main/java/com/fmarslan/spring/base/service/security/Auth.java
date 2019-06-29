@@ -33,6 +33,7 @@ public @interface Auth {
 
 	public static final String BLOCKED = "BLOCKED";
 	public static final String UNSECURED = "UNSECURED";
+	public static final String AUTHENTICATED = "AUTHENTICATED";
 
 	String value() default BLOCKED;
 }

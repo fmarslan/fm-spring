@@ -7,7 +7,7 @@
 		<artifactId>fm-parent</artifactId>
 		<version>1.0.2-2</version>
 	</parent>
-	<version>1.0.0</version>
+	<version>1.0.1</version>
 	<groupId>com.fmarslan.struct-spring</groupId>
 	<artifactId>fm-spring</artifactId>
 	<packaging>pom</packaging>
@@ -34,11 +34,11 @@
 		<url>https://github.com/fmarslan/fm-spring</url>
 	</scm>
 	<properties>
-		<fm-struct-spring.version>1.0.0</fm-struct-spring.version>
+		<fm-struct-spring.version>1.0.1</fm-struct-spring.version>
 		<java.version>1.8</java.version>
 		<spring.boot.version>2.1.3.RELEASE</spring.boot.version>
 		<spring-cloud.version>Greenwich.RELEASE</spring-cloud.version>
-		<gpg.plugin.disabled>false</gpg.plugin.disabled>
+<!-- 		<gpg.plugin.disabled>false</gpg.plugin.disabled> -->
 		<swagger2.version>2.9.2</swagger2.version>
 		<swagger.annotation.version>1.5.20</swagger.annotation.version>
 		<swagger.ui.version>${swagger2.version}</swagger.ui.version>

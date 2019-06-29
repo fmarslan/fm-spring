@@ -17,6 +17,7 @@ package com.fmarslan.spring.base.persistence;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.Objects;
 import javax.persistence.Column;
 import javax.persistence.EntityListeners;
 import javax.persistence.MappedSuperclass;
@@ -58,7 +59,7 @@ public abstract class BaseEntity<ID extends Serializable>
 
   @Version
   @Column(name = "ROW_VERSION", nullable = false)
-  private int version;
+  private int version = 0;
 
   public String getCreatedUser() {
     return createdUser;
@@ -103,4 +104,25 @@ public abstract class BaseEntity<ID extends Serializable>
   @JsonIgnore
   public abstract void setPrimaryKey(ID id);
 
+  @SuppressWarnings("unchecked")
+  @Override
+  public boolean equals(Object o) {
+    if (this == o) {
+      return true;
+    }
+    if (o == null || getClass() != o.getClass()) {
+      return false;
+    }
+    BaseEntity<ID> entity = (BaseEntity<ID>) o;
+    if (entity.getPrimaryKey() == null || getPrimaryKey() == null) {
+      return false;
+    }
+    return Objects.equals(getPrimaryKey(), entity.getPrimaryKey());
+  }
+
+  @Override
+  public int hashCode() {
+    return Objects.hashCode(getPrimaryKey());
+  }
+  
 }

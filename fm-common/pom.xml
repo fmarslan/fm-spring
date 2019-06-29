@@ -5,7 +5,7 @@
 	<parent>
 		<groupId>com.fmarslan.struct-spring</groupId>
 		<artifactId>fm-spring</artifactId>
-		<version>1.0.0</version>
+		<version>1.0.1</version>
 	</parent>
 	<artifactId>fm-common</artifactId>
 	<name>FM SC-Common</name>
