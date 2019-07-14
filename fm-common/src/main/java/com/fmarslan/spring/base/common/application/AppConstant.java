@@ -23,7 +23,7 @@ package com.fmarslan.spring.base.common.application;
 public class AppConstant {
 
   public static final String ACCEPT_LANGUAGE = "ACCEPT_LANGUAGE";
-
+  public static final String CURRENT_USER_NAME = "CURRENT_USER";
   private AppConstant() {
 
   }

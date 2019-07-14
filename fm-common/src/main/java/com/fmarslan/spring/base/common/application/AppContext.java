@@ -17,10 +17,9 @@ package com.fmarslan.spring.base.common.application;
 
 import java.util.HashMap;
 import java.util.Map;
-import com.fmarslan.spring.base.common.shared.ICurrentUserDetail;
 
 public class AppContext {
-
+ 
   static ThreadLocal<Map<String, String>> requestData = new ThreadLocal<>();
 
   private AppContext() {}
@@ -36,16 +35,6 @@ public class AppContext {
     if (requestData.get() == null)
       requestData.set(new HashMap<String, String>());
     return requestData.get().get(key);
-  }
-
-  static ICurrentUserDetail currentUserHandler;
-
-  public static void setCurrentUserHandler(ICurrentUserDetail currentUserHandler) {
-    AppContext.currentUserHandler = currentUserHandler;
-  }
-
-  public static ICurrentUserDetail getCurrentUserHandler() {
-    return currentUserHandler;
   }
 
 }

@@ -16,7 +16,11 @@
 package com.fmarslan.spring.base.persistence;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.LinkedList;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -33,13 +37,33 @@ import com.fmarslan.spring.base.persistence.query.CustomQueryBase;
 
 public abstract class AbstractRepository<ID extends Serializable, ENTITY extends BaseEntity<ID>> {
 
+
   Class<ENTITY> entityClazz;
 
   @PersistenceContext
   EntityManager entityManager;
 
+  HashMap<String, String> filter = new HashMap<String, String>();
+  HashMap<String, String> order = new HashMap<String, String>();
+  LinkedList<String> joinEntities = new LinkedList<String>();
+
+
   public AbstractRepository(Class<ENTITY> entityClazz) {
     this.entityClazz = entityClazz;
+  }
+
+  /**
+   * @return the filter
+   */
+  public HashMap<String, String> getFilter() {
+    return filter;
+  }
+
+  /**
+   * @return the order
+   */
+  public HashMap<String, String> getOrder() {
+    return order;
   }
 
   protected EntityManager getEntityManager() {
@@ -120,35 +144,75 @@ public abstract class AbstractRepository<ID extends Serializable, ENTITY extends
    * operation
    */
   public ListModel<ENTITY> getPage(ListRequest request) {
-    CriteriaBuilder cb = getEntityManager().getCriteriaBuilder();
-    CriteriaQuery<ENTITY> cq = cb.createQuery(entityClazz);
-    Root<ENTITY> from = cq.from(entityClazz);
-    cq.select(from);
 
-    // cq.where(/* where clause*/);
-
-    // cq.orderBy(o) //order
-
-    TypedQuery<ENTITY> q = getEntityManager().createQuery(cq);
-    q.setFirstResult(request.getOffset());
-    q.setMaxResults(request.getCount());
-    List<ENTITY> allitems = q.getResultList();
     ListModel<ENTITY> result = new ListModel<ENTITY>();
-    result.setCount(allitems.size());
-    result.setOffset(request.getOffset());
+
+    String queryString = " FROM %s e " + String.join(" ", joinEntities);
+
+    HashMap<String, Object> params = new HashMap<String, Object>();
+
+    if (request.getFilter() != null && request.getFilter().size() > 0) {
+      List<String> filters = new ArrayList<String>();
+      request.getFilter().forEach((k, v) -> {
+        if (getFilter().containsKey(k)) {
+          String f = getFilter().get(k);
+          filters.add(f);
+          if (f.indexOf(":" + k) > -1) {
+            params.put(k, v);
+          }
+        }
+      });
+
+      if (filters.size() > 0) {
+        queryString += " WHERE " + String.join(" AND ", filters);
+      }
+    }
+
+    Long count = null;
+
+    if (request.isOnlyData() == false) {
+      count = setParameterToQuery(
+          getEntityManager().createQuery("SELECT COUNT(e) " + queryString, Long.class), params)
+              .getSingleResult();
+      result.setTotalCount(count);
+    }
+
+    if (request.isOnlyCount() == false && (request.isOnlyData() || count > 0)) {
+
+      String orders = " ";
+      if (request.getOrder() != null && request.getOrder().size() > 0) {
+        LinkedList<String> _order = new LinkedList<String>();
+        request.getOrder().forEach((k, v) -> {
+          if (getOrder().containsKey(k)) {
+            String o = getOrder().get(k);
+            _order.add(o + " " + v.toString());
+          }
+        });
+        orders = String.join(" , ", _order);
+      }
 
 
-    CriteriaBuilder qb = entityManager.getCriteriaBuilder();
-    CriteriaQuery<Long> cqCount = qb.createQuery(Long.class);
-    cqCount.select(qb.count(cq.from(entityClazz)));
 
-    // cqCount.where(/* where clause*/);
+      TypedQuery<ENTITY> query =
+          getEntityManager().createQuery("SELECT e " + queryString + orders, entityClazz);
+      query.setFirstResult(request.getOffset());
+      query.setMaxResults(request.getSize());
 
-    Long count = entityManager.createQuery(cqCount).getSingleResult();
+      List<ENTITY> allitems = query.getResultList();
 
-    result.setTotalCount(count);
+      result.setCount(allitems.size());
+      result.setOffset(request.getOffset());
 
+    }
     return result;
+  }
+
+  private <T> TypedQuery<T> setParameterToQuery(TypedQuery<T> query,
+      Map<String, Object> parameters) {
+    parameters.forEach((k, v) -> {
+      query.setParameter(k, v);
+    });
+    return query;
   }
 
   @SuppressWarnings("unchecked")

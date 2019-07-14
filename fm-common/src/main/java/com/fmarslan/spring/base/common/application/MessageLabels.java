@@ -32,6 +32,8 @@ public class MessageLabels {
   public static final String ACCESS_DENIED = "Access denied.";
   
   public static final String NOT_SUPPORTED = "Not supported.";
+  
+  public static final String NOT_FOUND_ITEM = "Not found %s : %s";
 
   private MessageLabels() {
     // TODO Auto-generated constructor stub

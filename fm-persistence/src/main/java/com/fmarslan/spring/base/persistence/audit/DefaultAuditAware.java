@@ -18,6 +18,7 @@ package com.fmarslan.spring.base.persistence.audit;
 
 import java.util.Optional;
 import org.springframework.data.domain.AuditorAware;
+import com.fmarslan.spring.base.common.application.AppConstant;
 import com.fmarslan.spring.base.common.application.AppContext;
 
 /**
@@ -28,6 +29,9 @@ import com.fmarslan.spring.base.common.application.AppContext;
 public class DefaultAuditAware implements AuditorAware<String> {
   @Override
   public Optional<String> getCurrentAuditor() {
-    return Optional.ofNullable(AppContext.getCurrentUserHandler().getCurrentUserName());
+    String username = AppContext.get(AppConstant.CURRENT_USER_NAME);
+    if (username == null || username.trim().equals(""))
+      username = "undefined";
+    return Optional.ofNullable(username);
   }
 }
